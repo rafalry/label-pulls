@@ -1,0 +1,10 @@
+name: 'Label pull requests'
+description: 'Labels pull requests based on Jira issue type'
+inputs:
+  issuetype-to-label-map:
+    description: 'A map of issuetype to label in format: "Bug:bug,Story:enhancement,Task:enhancement"'
+    required: false
+    default: 'Bug:bug'
+runs:
+  using: 'node12'
+  main: 'index.js'
