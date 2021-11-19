@@ -24,8 +24,8 @@ async function run() {
       method: 'get',
       url: `https://onewelcome.atlassian.net/rest/api/3/issue/${issuekey}?fields=issuetype`,
       auth: {
-        username: process.env.JIRA_API_USERNAME,
-        password: process.env.JIRA_API_TOKEN
+        username: core.getInput('JIRA_API_USERNAME'),
+        password: core.getInput('JIRA_API_TOKEN')
       },
       headers: {
         'Content-Type': 'application/json'
