@@ -39,11 +39,7 @@ async function run() {
         owner: github.context.payload.organization.login,
         repo: github.context.payload.repository.name,
         issue_number: github.context.payload.pull_request.number,
-        labels: [
-          {
-            name: issuetypeToLabel[issuetype]
-          }
-        ]
+        labels: [issuetypeToLabel[issuetype]]
       })
     }).catch(function (error) {
       if (error.response) {
