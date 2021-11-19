@@ -10,7 +10,7 @@ async function run() {
   issuetypeToLabelInput.split(',').forEach(mapping => issuetypeToLabel[mapping.split(':')[0]] = mapping.split(':')[1])
 
   const regex = new RegExp('^[A-Z]+-[0-9]+')
-  console.log('github.context.payload', github.context.payload)
+  console.log('github.context', github.context)
   console.log('github.context.payload.pull_request._links.self.href', github.context.payload.pull_request._links.self.href)
   const title = "SAAS-609 asdas"
       // github.context.payload &&
