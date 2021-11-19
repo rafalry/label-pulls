@@ -10,7 +10,8 @@ async function run() {
   issuetypeToLabelInput.split(',').forEach(mapping => issuetypeToLabel[mapping.split(':')[0]] = mapping.split(':')[1])
 
   const regex = new RegExp('^[A-Z]+-[0-9]+')
-  console.log('github.context.payload.pull_request', github.context.payload.pull_request._links.self.href)
+  console.log('github.context.payload', github.context.payload)
+  console.log('github.context.payload.pull_request._links.self.href', github.context.payload.pull_request._links.self.href)
   const title = "SAAS-609 asdas"
       // github.context.payload &&
       // github.context.payload.pull_request &&
@@ -34,6 +35,11 @@ async function run() {
       console.log(response.data);
       const issuetype = response.data.fields.issuetype.name;
       console.log(issuetype)
+
+      const githubToken = core.getInput('GITHUB_TOKEN');
+      const octokit = github.getOctokit(githubToken)
+      // octokit.rest.issues.addLabels({
+      // })
     }).catch(function (error) {
       if (error.response) {
         console.log(error.response.data);
