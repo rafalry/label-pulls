@@ -34,6 +34,10 @@ async function run() {
       console.log(response.data);
       const issuetype = response.data.fields.issuetype.name;
       console.log(issuetype)
+    }).catch(function (error) {
+      if (error.response) {
+        console.log(error.response.data);
+      }
     });
   }
 }
