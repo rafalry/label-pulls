@@ -12,10 +12,7 @@ async function run() {
   const regex = new RegExp('^[A-Z]+-[0-9]+')
   console.log('github.context', github.context)
   console.log('github.context.payload.pull_request._links.self.href', github.context.payload.pull_request._links.self.href)
-  const title = "SAAS-609 asdas"
-      // github.context.payload &&
-      // github.context.payload.pull_request &&
-      // github.context.payload.pull_request.title
+  const title = github.context.payload.pull_request.title
   core.info(title)
   const issuekeyExtraction = regex.exec(title)
   if (issuekeyExtraction) {
@@ -38,8 +35,16 @@ async function run() {
 
       const githubToken = core.getInput('GITHUB_TOKEN');
       const octokit = github.getOctokit(githubToken)
-      // octokit.rest.issues.addLabels({
-      // })
+      octokit.rest.issues.addLabels({
+        owner: github.context.payload.organization.login,
+        repo: github.context.payload.repository.name,
+        issue_number: github.context.payload.pull_request.number,
+        labels: [
+          {
+            name: issuetypeToLabel[issuetype]
+          }
+        ]
+      })
     }).catch(function (error) {
       if (error.response) {
         console.log(error.response.data);
