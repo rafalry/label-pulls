@@ -4,7 +4,7 @@ const axios = require('axios');
 
 async function run() {
 
-  const issuetypeToLabelInput = core.getInput('issuetype-to-label');
+  const issuetypeToLabelInput = core.getInput('issuetype-to-label-map');
 
   const issuetypeToLabel = {};
   issuetypeToLabelInput.split(',').forEach(mapping => issuetypeToLabel[mapping.split(':')[0]] = mapping.split(':')[1])
