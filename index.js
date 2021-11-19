@@ -10,11 +10,9 @@ async function run() {
   issuetypeToLabelInput.split(',').forEach(mapping => issuetypeToLabel[mapping.split(':')[0]] = mapping.split(':')[1])
 
   const regex = new RegExp('^[A-Z]+-[0-9]+')
-  console.log('issuetypeToLabel', issuetypeToLabel)
-  console.log('github.context', github.context)
-  console.log('github.context.payload.pull_request._links.self.href', github.context.payload.pull_request._links.self.href)
+  console.log('issuetype to label mapping: ', issuetypeToLabel)
   const title = github.context.payload.pull_request.title
-  core.info(title)
+  core.info('Pull request title: ', title)
   const issuekeyExtraction = regex.exec(title)
   if (issuekeyExtraction) {
     const issuekey = issuekeyExtraction[0]
@@ -30,9 +28,9 @@ async function run() {
         'Content-Type': 'application/json'
       }
     }).then(function (response) {
-      console.log(response.data);
       const issuetype = response.data.fields.issuetype.name;
-      console.log(issuetype)
+      console.log('Found issuetype:', issuetype);
+      console.log('Applying label:', issuetypeToLabel[issuetype])
 
       const githubToken = core.getInput('GITHUB_TOKEN');
       const octokit = github.getOctokit(githubToken)
@@ -41,6 +39,8 @@ async function run() {
         repo: github.context.payload.repository.name,
         issue_number: github.context.payload.pull_request.number,
         labels: [issuetypeToLabel[issuetype]]
+      }).then(function (result) {
+        console.log('Result of adding labels:', result)
       })
     }).catch(function (error) {
       if (error.response) {
