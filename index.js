@@ -40,7 +40,7 @@ async function run() {
         issue_number: github.context.payload.pull_request.number,
         labels: [issuetypeToLabel[issuetype]]
       }).then(function (result) {
-        console.log('Result of adding labels:', result)
+        console.log('Result of adding labels:', result.data)
       })
     }).catch(function (error) {
       if (error.response) {
